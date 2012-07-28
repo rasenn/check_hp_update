@@ -1,0 +1,15 @@
+<%= link_to "TOP" , :controller => "check_update" , :action => "index" %>
+
+<table border=1>
+  <th>タイトル</th>
+  <th>削除</th>
+<% @histories.each do |hist| %>
+  <tr>
+    <td >
+      <%= hist[:title] %>
+    </td>
+    <td><%= link_to "削除" , :controller => "check_update" , :action => "delete" , :id => hist[:id] , :confirm => "削除しますか？"  %></td>
+  </tr>
+
+<% end %>
+</table>

@@ -1,0 +1,27 @@
+<%= link_to "更新" , :controller => "check_update", :action => "index" %>
+
+<table>
+<td><%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></td>
+<td><%= link_to "削除フォーム" , :controller => "check_update" , :action => "delete_list" %></td>
+</table>
+
+<table border=1>
+  <th>タイトル</th>
+  <th>最終チェック日</th>
+  <th>最終更新日</th>
+  <th>システム最終チェック</th>
+<% @histories.each do |hist| %>
+  <% color = ( hist[:last_update].to_datetime >= hist[:last_check] ? "RED" : "white") %>
+  <tr bgcolor="<%= color %>">
+    <td ><a href="<%= url_for :action => :show , :url => hist[:url] , :url_id => hist[:url_id] %>" target="_blank">
+         <% if hist[:title] %><%= hist[:title] %>
+	 <% else %><%= hist[:url] %>
+	 <% end %>
+    </a></td>
+    <td><%= hist[:last_check] %></td>
+    <td><%= hist[:last_update] %></td>
+    <td><%= hist[:last_crawl] %></td>
+  </tr>
+
+<% end %>
+</table>
