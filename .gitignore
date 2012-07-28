@@ -12,7 +12,7 @@
 /db/*.sqlite3
 #/db/seed.rb
 
-/Gemfile.lock
+#/Gemfile.lock
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
