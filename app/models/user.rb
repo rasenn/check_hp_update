@@ -74,8 +74,8 @@ class User < ActiveRecord::Base
   def get_lists
     return CheckHistory.select("check_histories.* , urls.* ").
     	      where("check_histories.user_id="+self.id.to_s).
-	      joins("INNER JOIN urls on check_histories.url_id=urls.id ")
-#	      order("urls.last_update - check_histories.last_check")
+	      joins("INNER JOIN urls on check_histories.url_id=urls.id ").
+	      order("urls.last_update desc")
 	      #order(" CAST(CONVERT(VARCHAR,urls.last_update) as INT - CAST(CONVERT(VARCHAR( check_histories.last_check ) )) AS INT " )
   end
 
