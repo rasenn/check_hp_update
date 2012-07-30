@@ -14,7 +14,7 @@
   <% color = ( hist[:last_update].to_datetime >= hist[:last_check] ? "RED" : "white") %>
   <tr bgcolor="<%= color %>">
     <td ><a href="<%= url_for :action => :show , :url => hist[:url] , :url_id => hist[:url_id] %>" target="_blank">
-         <% if hist[:title] %><%= hist[:title] %>
+         <% if hist[:title] && hist[:title].size > 0 %><%= hist[:title] %>
 	 <% else %><%= hist[:url] %>
 	 <% end %>
     </a></td>
