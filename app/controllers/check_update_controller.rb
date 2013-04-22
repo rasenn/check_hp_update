@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 class CheckUpdateController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user! , :expect => [:check_updates]
 
   def index
     @histories = current_user.get_lists

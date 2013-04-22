@@ -1,7 +1,7 @@
 <%= link_to "更新" , :controller => "check_update", :action => "index" %>
 
 <table class="span3" >
-<td><%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></td>
+<td ><%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></td>
 <td><%= link_to "削除フォーム" , :controller => "check_update" , :action => "delete_list" %></td>
 </table>
 

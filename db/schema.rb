@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120726145326) do
   end
 
   add_index "check_histories", ["url_id"], :name => "index_check_histories_on_url_id"
+  add_index "check_histories", ["user_id", "url_id"], :name => "index_check_histories_on_user_id_and_url_id", :unique => true
   add_index "check_histories", ["user_id"], :name => "index_check_histories_on_user_id"
 
   create_table "urls", :force => true do |t|
