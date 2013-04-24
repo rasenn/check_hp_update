@@ -35,7 +35,7 @@ MangaChecker::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   
-  # add by @rasenn
+  # add by @RASENN
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 
 end

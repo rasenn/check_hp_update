@@ -1,25 +1,33 @@
 MangaChecker::Application.routes.draw do
+
+  #root :to => "check_update#index"
   root :to => "check_update#index"
-
   get "check_update/logout"
-
   get "check_update/index"
-
   get "check_update/show"
-
-  match "check_update/add_url"
-
   get "check_update/add_url_form"
-
-  get "home/index"
-  
   get "check_update/check_updates"
-
   get "check_update/delete"
   get "check_update/delete_list"
+  post "check_update/add_url"
+  get "check_update/add_url"
+  get "home/index"
+  get "check_update/redirect"
 
-  
   devise_for :users
+  resources :posts
+  match "posts/:id/categ" => "posts#categ"
+  match "posts/:id/tag_posts" => "posts#tag_posts"
+  match "posts/searcharchive" => "posts#searcharchive"
+  resources :categories
+  resources :comments
+  resources :countpages
+  #root :to => "posts#index"
+
+    
+
+
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,4 +1,8 @@
+URLを追加してください。<BR />
+１行１URLにすることで１度に複数登録することもできます。<BR />
+
+
 <%= form_tag :action => "add_url" do%>
   <%= text_area_tag :urls %>
-  <%= submit_tag "登録"%>
+  <%= submit_tag "登録", :class =>"primary"%>
 <% end %> 

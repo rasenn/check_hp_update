@@ -1,19 +1,28 @@
 # -*- coding: utf-8 -*-
 class CheckUpdateController < ApplicationController
-  before_filter :authenticate_user! , :expect => [:check_updates]
+  before_filter :authenticate_user! , :except => [:check_updates, :index, :redirect]
+  @index_popular_limit = 10
+  @index_persons_limit  = 10
 
   def index
+    @populars = Url.get_popular_urls #(@index_popular_limit,0)
+    if current_user
+      @histories = current_user.get_lists.limit(@index_persons_limit)
+    end
+  end
+
+  def show
     @histories = current_user.get_lists
   end
 
-  # アドレスへ飛ぶ
-  def show
+  # 指定アドレスへ飛ぶ
+  def redirect
     url_id = params[:url_id]
     url = params[:url]
-    current_user.update_check(url_id)
+    current_user.update_check(url_id) if current_user
     redirect_to(url)
   end
-
+  
   # 新規URLの入力
   def add_url_form
   end
@@ -44,8 +53,10 @@ class CheckUpdateController < ApplicationController
 
   # ログアウト
   def logout
+    p current_user
     destroy_user_session_path
-    render_to :action => :index
+    p current_user
+    redirect_to :action => :index
   end
 
 end

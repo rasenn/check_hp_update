@@ -6,8 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.destroy_all
-user = User.create! :id => 1 , :email => "admin@example.com" , :password => "adminadmin"
+CheckHistory.delete_all
+Url.delete_all
+User.delete_all
+user = User.create!( :id => 1 , :email => "admin@example.com" , :password => "adminadmin")
 
 user.add_url("http://galaxyheavyblow.web.fc2.com/")
 user.add_url("http://niitosyayou.sitemix.jp/")

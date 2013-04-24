@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Url < ActiveRecord::Base
   has_many :check_history
   has_and_belongs_to_many :users
@@ -24,5 +25,16 @@ class Url < ActiveRecord::Base
   end
 
 
+  ## 登録数の多い件数を表示する。
+  def Url.get_popular_urls
+    return CheckHistory.
+      select("check_histories.url_id,count(*) as count,check_histories.title,urls.url as url").
+      joins("INNER JOIN urls on check_histories.url_id=urls.id").
+      order("count(*)")
+#      select("urls.url,check_histories,count(*) as count").
+#      joins("INNER JOIN urls on check_histories.url_id=urls.id")
+#      group("urls.url_id").
+#      order("count(*)")
+  end
   
 end

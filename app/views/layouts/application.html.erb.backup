@@ -45,34 +45,29 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">MangaChecker</a>
+          <a class="brand" href="#">MangaChecker</a>
+
           <div class="container-fluid nav-collapse">
-            <ul class="nav pull-right">
-	      <% if current_user %>
-		<li><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></li>
-	      <% else %>
-	      <li><%= link_to "ユーザ登録", new_user_registration_path %></li>
-	        <li><%= link_to "ログイン", new_user_session_path %></li>
-	      <% end %>
+            <ul class="nav">
+              <li><#%= link_to "更新" , :controller => "check_update", :action => "index" %></li>
+              <li><#%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></li>
+              <li><%#= link_to "削除フォーム" , :controller => "check_update" , :action => "delete_list" %></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
-
-
+<!--
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-	      <% if current_user %>
-              <!-- <li class="nav-header">Sidebar</li> -->
-              <li><%= link_to "更新" , :controller => "check_update", :action => "index" %></li>
-              <li><%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></li>
-              <li><%= link_to "削除フォーム" , :controller => "check_update" , :action => "delete_list" %></li>
-              <li><%= link_to "強制更新" , :controller => "check_update", :action => "check_updates" %></li>
-	      <% end %>
+              <li class="nav-header">Sidebar</li>
+              <li><#%= link_to "更新" , :controller => "check_update", :action => "index" %></li>
+	      
+              <li><#%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></li>
+              <li><%#= link_to "削除フォーム" , :controller => "check_update" , :action => "delete_list" %></li>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->
@@ -82,9 +77,8 @@
         </div>
       </div><!--/row-->
 
-
       <footer>
-        <p>&copy; <a href="https://twitter.com/RASENN" target="_blank">@RASENN</a> 2012</p>
+        <p>&copy; Company 2013</p>
       </footer>
 
     </div> <!-- /container -->

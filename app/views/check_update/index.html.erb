@@ -1,27 +1,70 @@
-<%= link_to "更新" , :controller => "check_update", :action => "index" %>
 
-<table class="span3" >
-<td><%= link_to "URL追加フォーム" , :controller => "check_update" , :action => "add_url_form" %></td>
-<td><%= link_to "削除フォーム" , :controller => "check_update" , :action => "delete_list" %></td>
-</table>
 
-<table border=1>
-  <th>タイトル</th>
-  <th>最終チェック日</th>
-  <th>最終更新日</th>
-  <th>システム最終チェック</th>
-<% @histories.each do |hist| %>
-  <% color = ( hist[:last_update].to_datetime >= hist[:last_check] ? "RED" : "white") %>
-  <tr bgcolor="<%= color %>">
-    <td ><a href="<%= url_for :action => :show , :url => hist[:url] , :url_id => hist[:url_id] %>" target="_blank">
-         <% if hist[:title] && hist[:title].size > 0 %><%= hist[:title] %>
-	 <% else %><%= hist[:url] %>
-	 <% end %>
-    </a></td>
-    <td><%= hist[:last_check] %></td>
-    <td><%= hist[:last_update] %></td>
-    <td><%= hist[:last_crawl] %></td>
+
+<% if @histories %>
+<table class="table table-bordered table-hover table-striped">
+  <tr>
+    <td colspan="2">
+      <div align="center">登録</div>
+    </td>
   </tr>
-
-<% end %>
+  <% @histories.each do |hist| %>
+  <tr>
+    <td class="span2" >
+      <% if ( hist[:last_update].to_datetime >= hist[:last_check] )%>
+        未読
+      <% else %>
+        既読
+      <% end %>
+    </td>
+    <td class="span7">
+      <a href="<%= url_for :action => :redirect , :url => hist[:url] , :url_id => hist[:url_id] %>" target="_blank">
+      <% if hist[:title] && hist[:title].size > 0 %>
+        <%= hist[:title] %>
+      <% else %>
+        <%= hist[:url] %>
+      <% end %>
+      </a>
+    </td>
+  </tr>
+  <% end %>
 </table>
+<% end %>
+
+
+
+<% if @populars %>
+<table class="table table-bordered table-hover table-striped">
+  <% @populars.each do |popu| %>
+  <tr>
+    <td colspan="<%= current_user ? 3 : 2 %>">
+      <div align="center">人気のHP</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="span2" >
+      <%= popu[:count] %>ユーザ
+    </td>
+    <td class="span<%= current_user ? 7 : 5 %>">
+      <a href="<%= url_for :action => :redirect , :url => popu[:url] , :url_id => popu[:url_id] %>" target="_blank">
+      <% if popu[:title] && popu[:title].size > 0 %>
+        <%= popu[:title] %>
+      <% else %>
+        <%= popu[:url] %>
+      <% end %>
+      </a>
+    </td>
+    <% if current_user %>
+    <td class="span2 btn">
+      <div align="center">
+	<%#= form_tag :action => :add_url%>
+	  <%#= %>
+	<%= link_to "登録", :action => :add_url, :urls => popu[:url], :method => :post %>
+      </div>
+    </td>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+<% end %>
+
