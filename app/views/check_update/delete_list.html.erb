@@ -1,15 +1,21 @@
-<%= link_to "TOP" , :controller => "check_update" , :action => "index" %>
-
-<table border=1>
-  <th>タイトル</th>
-  <th>削除</th>
-<% @histories.each do |hist| %>
+<% if @histories.exists? %>
+<table class="table table-bordered table-hover table-striped">
+  </thread>
+  <tbody>
+  <% @histories.each do |hist| %>
   <tr>
-    <td >
+    <td class="span7" >
       <%= hist[:title] %>
     </td>
-    <td><%= link_to "削除" , :controller => "check_update" , :action => "delete" , :id => hist[:id] , :confirm => "削除しますか？"  %></td>
+    <td class="span2 btn btn-error">
+      <div align="center ">
+	<%= link_to "削除" , :controller => "check_update" , :action => "delete" , :id => hist[:id] , :confirm => "削除しますか？"  %>
+      </div>
+    </td>
   </tr>
-
-<% end %>
+  <% end %>
+  </tbody>
 </table>
+<% end %>
+
+

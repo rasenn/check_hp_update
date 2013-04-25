@@ -53,3 +53,9 @@ gem "less-rails"
 
 gem 'therubyracer', :platforms => :ruby
 
+group :test, :development do
+  gem "rspec-rails"
+end
+
+gem 'delayed_job_active_record'
+

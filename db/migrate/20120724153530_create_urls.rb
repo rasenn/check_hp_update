@@ -6,6 +6,7 @@ class CreateUrls < ActiveRecord::Migration
       t.datetime :last_update
       t.datetime :last_crawl
 
+
       t.timestamps
     end
   end

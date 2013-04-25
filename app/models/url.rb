@@ -27,13 +27,14 @@ class Url < ActiveRecord::Base
 
   ## 登録数の多い件数を表示する。
   def Url.get_popular_urls
-    return CheckHistory.
-      select("check_histories.url_id,count(*) as count,check_histories.title,urls.url as url").
-      joins("INNER JOIN urls on check_histories.url_id=urls.id").
-      order("count(*)")
-#      select("urls.url,check_histories,count(*) as count").
-#      joins("INNER JOIN urls on check_histories.url_id=urls.id")
-#      group("urls.url_id").
+    return self.
+      select("count(*) as count,check_histories.url_id,urls.url,urls.title ").
+      joins("INNER JOIN check_histories on check_histories.url_id=urls.id").
+      group("urls.id").
+      order("count(*) desc")
+#      CheckHistory.
+#      select("check_histories.url_id,count(*) as count,check_histories.title,urls.url as url").
+#      joins("INNER JOIN urls on check_histories.url_id=urls.id").
 #      order("count(*)")
   end
   

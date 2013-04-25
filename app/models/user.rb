@@ -15,10 +15,11 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
   def add_urls(urls)
+    result = Array.new
     urls.each_line do |line|
       line = line.chomp
       if line.size > 0
-        add_url(line)
+        result.push add_url(line)
       end
     end
   end
@@ -29,8 +30,7 @@ class User < ActiveRecord::Base
     
     begin
       ActiveRecord::Base::transaction() do
-        db_url = Url.find(:first , :conditions => [" url = ?", url])
-	
+        db_url = Url.find(:first , :conditions => [" url = ?", url])	
         now = DateTime.now
 
         process_html = ProcessHTML.new("UTF-8")
@@ -38,17 +38,19 @@ class User < ActiveRecord::Base
         # DB中にurlが存在しなければ追加
 	unless db_url
           db_url = Url.create! :url => url, :context => source , 
-	  	 :last_update => now , :last_crawl => now	  
+	  	 :last_update => now , :last_crawl => now,
+                 :title => title
 	end
 
 	# チェックリストにすでになければ、チェックリストに追加
- 	ch = CheckHistory.find(:first , :conditions => [" user_id=? and url_id=? ",self.id,db_url.id ])
-	unless ch
-	  CheckHistory.create! :last_check => (now - Rational(1, 24 * 60 * 60) ) ,
+ 	ch = CheckHistory.select("*").where(:user_id => self.id).where(:url_id => db_url.id)
+	unless ch.exists?
+	  CheckHistory.create! :last_check => (DateTime.new(2000,1,1) ) ,
 	  		       :user_id =>  self.id , :url_id => db_url.id ,  
 		 	       :title => title
 	end
       end
+      return true
     rescue
       raise
       return false
@@ -67,7 +69,7 @@ class User < ActiveRecord::Base
 
   # 削除用URLリストの取得
   def get_delete_list
-    return CheckHistory.find(:all , :conditions => ["user_id=?",self.id])
+    return CheckHistory.where(:user_id => self.id)
   end
 
   # URLリストの取得
@@ -75,7 +77,7 @@ class User < ActiveRecord::Base
     return CheckHistory.select("check_histories.* , urls.* ").
     	      where("check_histories.user_id="+self.id.to_s).
 	      joins("INNER JOIN urls on check_histories.url_id=urls.id ").
-	      order("urls.last_update desc")
+	      order("check_histories.last_check>urls.last_update,urls.last_update desc")
 	      #order(" CAST(CONVERT(VARCHAR,urls.last_update) as INT - CAST(CONVERT(VARCHAR( check_histories.last_check ) )) AS INT " )
   end
 
@@ -84,7 +86,7 @@ class User < ActiveRecord::Base
       ActiveRecord::Base::transaction() do
         now = DateTime.now
         history = CheckHistory.find(:first , :conditions => ["url_id=? and user_id=?",url_id.to_s,self.id.to_s])
-	history[:last_check] = (now - Rational(1, 24 * 60 * 60) ).to_s
+	history[:last_check] = DateTime.now 
 	history.save!
       end   
     rescue
@@ -93,7 +95,7 @@ class User < ActiveRecord::Base
   end
 
 
-private 
+  private
   def remove_last_slash(url)
     url = url.gsub(/\/$/,"")
   end

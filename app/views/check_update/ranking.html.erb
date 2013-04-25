@@ -1,41 +1,4 @@
-
-<% if @histories %>
-<table class="table table-bordered table-hover table-striped">
-  <thread>
-    <tr>
-      <td colspan="2">
-	<div align="center">登録済みHP</div>
-      </td>
-    </tr>
-  </thread>
-  <tbody>
-  <% @histories.each do |hist| %>
-  <% readed = hist[:last_update].to_datetime >= hist[:last_check] %>
-  <tr class="<%= "info" if readed %>">
-    <td class="span2"> 
-      <% if readed %>
-        未読
-      <% else %>
-        既読
-      <% end %>
-    </td>
-    <td class="span7">
-      <a href="<%= url_for :action => :redirect , :url => hist[:url] , :url_id => hist[:url_id] %>" target="_blank">
-      <% if hist[:title] && hist[:title].size > 0 %>
-        <%= hist[:title] %>
-      <% else %>
-        <%= hist[:url] %>
-      <% end %>
-      </a>
-    </td>
-  </tr>
-  <% end %>
-  </tbody>
-</table>
-<% end %>
-
-
-
+<% url_ids = @histories.map{}%>
 <% if @populars.exists? %>
 <table class="table table-bordered table-hover table-striped">
   <thread>

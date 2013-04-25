@@ -9,9 +9,11 @@
 CheckHistory.delete_all
 Url.delete_all
 User.delete_all
-user = User.create!( :id => 1 , :email => "admin@example.com" , :password => "adminadmin")
 
+user = User.create(:email => "admin@example.com" , :password => "adminadmin" )
 user.add_url("http://galaxyheavyblow.web.fc2.com/")
 user.add_url("http://niitosyayou.sitemix.jp/")
 
 
+user2 = User.create(:email => "example@example.com" , :password => "example")
+user2.add_url("http://galaxyheavyblow.web.fc2.com/")

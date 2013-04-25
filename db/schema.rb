@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726145326) do
+ActiveRecord::Schema.define(:version => 20130425163830) do
 
   create_table "check_histories", :force => true do |t|
     t.string   "title"
@@ -26,6 +26,22 @@ ActiveRecord::Schema.define(:version => 20120726145326) do
   add_index "check_histories", ["user_id", "url_id"], :name => "index_check_histories_on_user_id_and_url_id", :unique => true
   add_index "check_histories", ["user_id"], :name => "index_check_histories_on_user_id"
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "urls", :force => true do |t|
     t.string   "url"
     t.text     "context"
@@ -33,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20120726145326) do
     t.datetime "last_crawl"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "title"
   end
 
   create_table "users", :force => true do |t|

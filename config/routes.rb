@@ -13,6 +13,7 @@ MangaChecker::Application.routes.draw do
   get "check_update/add_url"
   get "home/index"
   get "check_update/redirect"
+  get "check_update/ranking"
 
   devise_for :users
   resources :posts

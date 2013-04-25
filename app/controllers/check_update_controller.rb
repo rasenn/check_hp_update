@@ -5,10 +5,12 @@ class CheckUpdateController < ApplicationController
   @index_persons_limit  = 10
 
   def index
-    @populars = Url.get_popular_urls #(@index_popular_limit,0)
+    @populars = Url.get_popular_urls.offset(0).limit(@index_pupular_limit)
     if current_user
       @histories = current_user.get_lists.limit(@index_persons_limit)
+      @url_ids = @histories.map{|hist| hist[:url_id]}
     end
+    @url_ids ||= []
   end
 
   def show
@@ -28,9 +30,16 @@ class CheckUpdateController < ApplicationController
   end
 
   # URLの追加
+  # FIXME : controllerにコードを書いたらアカンやろ。。。
   def add_url
     current_user.add_urls params[:urls]
-    redirect_to :controller => :check_update , :action => :index
+    if params[:ajax]
+      render :add_url do |page|
+        page["url_"+params[:id]].replace_html "登録済み"
+      end
+    else
+      redirect_to :controller => :check_update , :action => :index
+    end
   end
 
   #　更新のチェック
@@ -43,7 +52,6 @@ class CheckUpdateController < ApplicationController
   
   def delete_list
     @histories = current_user.get_delete_list
-
   end
 
   def delete
@@ -53,10 +61,19 @@ class CheckUpdateController < ApplicationController
 
   # ログアウト
   def logout
-    p current_user
     destroy_user_session_path
-    p current_user
     redirect_to :action => :index
   end
+
+  def ranking
+    @populars = Url.get_popular_urls
+    if current_user
+      @histories = current_user.get_lists.limit(@index_persons_limit)
+      @url_ids = @histories.map{|hist| hist[:url_id]}
+    end
+    @url_ids ||= []
+
+  end
+    
 
 end
