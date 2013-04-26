@@ -14,9 +14,11 @@ class Url < ActiveRecord::Base
     process_html = ProcessHTML.new
     urls = self.find(:all)
     urls.each do |url|
-      title,source = process_html.get_title_and_sanitize_source(url.url)
-      url[:title] = title 
-      url.save
+      begin
+        title,source = process_html.get_title_and_sanitize_source(url.url)
+        url[:title] = title 
+        url.save
+      rescue;end
     end
   end
 
