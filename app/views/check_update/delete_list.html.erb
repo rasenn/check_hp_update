@@ -5,7 +5,13 @@
   <% @histories.each do |hist| %>
   <tr>
     <td class="span7" >
-      <%= hist[:title] %>
+      <a href="<%= url_for :action => :redirect , :url => hist[:url] , :url_id => hist[:url_id] %>" target="_blank">
+	<% if hist[:title] && hist[:title].size > 0 %>
+          <%= hist[:title] %>
+	<% else %>
+          <%= hist[:url] %>
+	<% end %>
+      </a>
     </td>
     <td class="span2 btn btn-error">
       <div align="center ">

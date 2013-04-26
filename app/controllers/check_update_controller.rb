@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 class CheckUpdateController < ApplicationController
   before_filter :authenticate_user! , :except => [:check_updates, :index, :redirect]
-  @index_popular_limit = 10
-  @index_persons_limit  = 10
+  INDEX_POPULAR_LIMIT = 10
+  INDEX_PERSONS_LIMIT = 10
 
   def index
-    @populars = Url.get_popular_urls.offset(0).limit(@index_pupular_limit)
+    @populars = Url.get_popular_urls.limit(INDEX_POPULAR_LIMIT).offset(0)
     if current_user
-      @histories = current_user.get_lists.limit(@index_persons_limit)
+      @histories = current_user.get_lists.limit(INDEX_PERSONS_LIMIT)
       @url_ids = @histories.map{|hist| hist[:url_id]}
     end
     @url_ids ||= []
@@ -52,6 +52,10 @@ class CheckUpdateController < ApplicationController
   
   def delete_list
     @histories = current_user.get_delete_list
+    if current_user
+      @histories = current_user.get_lists
+      @url_ids = @histories.map{|hist| hist[:url_id]}
+    end
   end
 
   def delete
@@ -68,7 +72,7 @@ class CheckUpdateController < ApplicationController
   def ranking
     @populars = Url.get_popular_urls
     if current_user
-      @histories = current_user.get_lists.limit(@index_persons_limit)
+      @histories = current_user.get_lists
       @url_ids = @histories.map{|hist| hist[:url_id]}
     end
     @url_ids ||= []

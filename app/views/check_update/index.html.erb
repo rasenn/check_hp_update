@@ -63,13 +63,11 @@
     <% if current_user %>
     <td class="span2 btn <%="btn-info" unless @url_ids.include?(popu[:id])%>">
       <div align="center">
-	<div id="url_<%= popu[:id] %>">
-	  <% if @url_ids.include?(popu[:id]) %>
-	    登録済
-	  <% else %>
-	    <%= link_to "登録",{ :action => :add_url, :urls => popu[:url], :id => popu[:id]} , {:method => :post }  %>
+	<% if @url_ids.include?(popu[:id]) %>
+	  登録済
+	<% else %>
+	  <%= link_to "登録",{ :action => :add_url, :urls => popu[:url], :id => popu[:id]} , {:method => :post } %>
 	  <% end %>
-	</div>
       </div>
     </td>
     <% end %>
