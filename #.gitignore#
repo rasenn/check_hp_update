@@ -18,9 +18,9 @@
 /log/*.log
 /tmp
 
-*~
 
-/config/database.yml
+
+*~
 
 =======
 *.rbc
@@ -40,4 +40,3 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 >>>>>>> origin/master
-
