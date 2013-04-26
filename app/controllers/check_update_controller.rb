@@ -8,7 +8,8 @@ class CheckUpdateController < ApplicationController
     @populars = Url.get_popular_urls.limit(INDEX_POPULAR_LIMIT).offset(0)
     if current_user
       @histories = current_user.get_lists.limit(INDEX_PERSONS_LIMIT)
-      @url_ids = @histories.map{|hist| hist[:url_id]}
+      his = current_user.get_lists
+      @url_ids = his.map{|hist| hist[:url_id]}
     end
     @url_ids ||= []
   end
@@ -76,8 +77,6 @@ class CheckUpdateController < ApplicationController
       @url_ids = @histories.map{|hist| hist[:url_id]}
     end
     @url_ids ||= []
-
   end
-    
 
 end
