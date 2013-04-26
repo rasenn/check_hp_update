@@ -20,7 +20,11 @@
 
 *~
 
+.*
+
+
 /config/database.yml
+/.gitignore
 
 =======
 *.rbc
