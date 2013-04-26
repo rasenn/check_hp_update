@@ -52,8 +52,6 @@
       <%= popu[:count] %>ユーザ
     </td>
     <td class="span<%= current_user ? 7 : 5 %>">
-      <%= popu[:id] %><br />
-      <%= popu[:url] %><br />
       <a href="<%= url_for :action => :redirect , :url => popu[:url] , :url_id => popu[:id] %>" target="_blank">
       <% if popu[:title] && popu[:title].size > 0 %>
         <%= popu[:title] %>
