@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
     begin
       ActiveRecord::Base::transaction() do
         now = DateTime.now
-        history = CheckHistory.find(:first , :conditions => ["url_id=? and user_id=?",url_id.to_s,self.id.to_s])
+        history = CheckHistory.where(:url_id => url_id.to_s, :user_id => self.id.to_s).first_or_create(:url_id => url_id.to_s, :user_id => self.id.to_s)
 	history[:last_check] = DateTime.now 
 	history.save!
       end   
