@@ -16,18 +16,6 @@ MangaChecker::Application.routes.draw do
   get "check_update/ranking"
 
   devise_for :users
-  resources :posts
-  match "posts/:id/categ" => "posts#categ"
-  match "posts/:id/tag_posts" => "posts#tag_posts"
-  match "posts/searcharchive" => "posts#searcharchive"
-  resources :categories
-  resources :comments
-  resources :countpages
-  #root :to => "posts#index"
-
-    
-
-
 
 
   # The priority is based upon order of creation:

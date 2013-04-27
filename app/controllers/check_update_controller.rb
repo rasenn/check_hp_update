@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class CheckUpdateController < ApplicationController
-  before_filter :authenticate_user! , :except => [:check_updates, :index, :redirect]
+  before_filter :authenticate_user! , :except => [:check_updates, :index, :redirect, :ranking]
   INDEX_POPULAR_LIMIT = 10
   INDEX_PERSONS_LIMIT = 10
 
@@ -27,20 +27,14 @@ class CheckUpdateController < ApplicationController
   end
   
   # 新規URLの入力
-  def add_url_form
+  def add_url_for
   end
 
   # URLの追加
   # FIXME : controllerにコードを書いたらアカンやろ。。。
   def add_url
     current_user.add_urls params[:urls]
-    if params[:ajax]
-      render :add_url do |page|
-        page["url_"+params[:id]].replace_html "登録済み"
-      end
-    else
-      redirect_to :controller => :check_update , :action => :index
-    end
+    redirect_to :controller => params[:controller], :action => params[:origin_action] || :index
   end
 
   #　更新のチェック

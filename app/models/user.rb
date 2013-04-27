@@ -2,9 +2,6 @@
 require "date"
 
 class User < ActiveRecord::Base
-  has_many :check_history
-  has_and_belongs_to_many :urls
-
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -13,6 +10,9 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+
+  has_many :check_history
+  has_and_belongs_to_many :urls
 
   def add_urls(urls)
     result = Array.new
@@ -60,11 +60,6 @@ class User < ActiveRecord::Base
   def remove_url(id)
     ch = CheckHistory.find(id)
     ch.destroy
-#    url = remove_last_slash(url)
-#    db_url = url.find(:first,:conditions => ["url=?",url])
-#    ch = CheckHistory.find(:first,:conditions => ["user_id=? and url_id",self.id,db_url.id])
-#    ch.delete!
-
   end
 
   # 削除用URLリストの取得
@@ -78,7 +73,6 @@ class User < ActiveRecord::Base
     	      where("check_histories.user_id="+self.id.to_s).
 	      joins("INNER JOIN urls on check_histories.url_id=urls.id ").
 	      order("check_histories.last_check>urls.last_update,urls.last_update desc")
-	      #order(" CAST(CONVERT(VARCHAR,urls.last_update) as INT - CAST(CONVERT(VARCHAR( check_histories.last_check ) )) AS INT " )
   end
 
   def update_check(url_id)
@@ -93,7 +87,6 @@ class User < ActiveRecord::Base
         raise      
     end
   end
-
 
   private
   def remove_last_slash(url)

@@ -41,7 +41,6 @@ gem 'jquery-rails'
 
 # add by @RASENN
 gem 'devise' 
-gem 'whenever' , :require => false
 
 group :production do
 #  gem 'therubyracer-heroku', '0.8.1.pre3' # you will need this too
