@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 class CheckUpdateController < ApplicationController
-  before_filter :authenticate_user! , :except => [:check_updates, :index, :redirect, :ranking]
+  before_filter :authenticate_user! , :except => [:check_updates, :index, :redirect, :ranking, :check_update, :check_maximum_id]
   INDEX_POPULAR_LIMIT = 10
   INDEX_PERSONS_LIMIT = 10
 
   def index
-    @populars = Url.get_popular_urls.limit(INDEX_POPULAR_LIMIT).offset(0)
+    @populars = Ranking.get_popular_urls.limit(INDEX_POPULAR_LIMIT).offset(0)
+#    @populars = Url.get_popular_urls.limit(INDEX_POPULAR_LIMIT).offset(0)
     if current_user
       @histories = current_user.get_lists.limit(INDEX_PERSONS_LIMIT)
       his = current_user.get_lists
@@ -45,10 +46,25 @@ class CheckUpdateController < ApplicationController
     redirect_to(:controller => :check_update , :action => :index )
   end
   
+  def check_update
+    url = Url.where(:id => params[:id]).first
+    if url
+      begin
+        url.check_update
+      rescue;end
+    end
+    redirect_to(:controller => :check_update , :action => :index )
+  end
+
+  def check_maximum_id
+    render :text => Url.maximum(:id).to_s
+  end
+
+  
+
   def delete_list
     @histories = current_user.get_delete_list
     if current_user
-      @histories = current_user.get_lists
       @url_ids = @histories.map{|hist| hist[:url_id]}
     end
   end
@@ -65,7 +81,8 @@ class CheckUpdateController < ApplicationController
   end
 
   def ranking
-    @populars = Url.get_popular_urls
+    @populars = Ranking.get_popular_urls
+#    @populars = Url.get_popular_urls
     if current_user
       @histories = current_user.get_lists
       @url_ids = @histories.map{|hist| hist[:url_id]}

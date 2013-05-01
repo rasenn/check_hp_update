@@ -58,8 +58,8 @@ class User < ActiveRecord::Base
   end
 
   def remove_url(id)
-    ch = CheckHistory.find(id)
-    ch.destroy
+    ch = CheckHistory.where(:id => id).first
+    ch.destroy if ch
   end
 
   # 削除用URLリストの取得

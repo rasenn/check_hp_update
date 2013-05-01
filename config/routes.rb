@@ -14,6 +14,8 @@ MangaChecker::Application.routes.draw do
   get "home/index"
   get "check_update/redirect"
   get "check_update/ranking"
+  get "check_update/check_update"
+  get "check_update/check_maximum_id"
 
   devise_for :users
 
