@@ -4,8 +4,7 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 MangaChecker::Application.initialize!
 
-
-:::ruby
+# Added by @RASENN
 ActionMailer::Base.smtp_settings = {
   :address        => 'smtp.sendgrid.net',
   :port           => '587',
