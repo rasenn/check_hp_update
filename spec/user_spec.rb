@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe User do
-  context "when user create," do 
+  context " when user create," do 
     before :each do
       User.delete_all
     end
@@ -13,7 +13,7 @@ describe User do
 
     it "should not be able to create replicated adress." do
       User.create(:email => "admin@example.com" , :password => "adminadmin")
-      User.create(:email => "admin@example.com" , :password => "adminadmin2").id.should be_true
+      User.create(:email => "admin@example.com" , :password => "adminadmin2").id.should_not be_true
     end
 
     it "should be can find." do 

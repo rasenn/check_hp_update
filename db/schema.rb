@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130425163830) do
+ActiveRecord::Schema.define(:version => 20130501111857) do
 
   create_table "check_histories", :force => true do |t|
     t.string   "title"
