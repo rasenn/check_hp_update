@@ -36,7 +36,7 @@ class ProcessHTML
   
   # 指定URLのサニタイズした（タグ・コメントを除いた）ソースを取得
   def get_sanitize_source(url)
-    source = get_title_and_sanitize_source(url)
+    title,source = get_title_and_sanitize_source(url)
     return source
   end
 

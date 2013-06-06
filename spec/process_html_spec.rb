@@ -6,6 +6,7 @@ describe ProcessHTML do
   iframe_url = "http://www.scollabo.com/banban/ref/sample/sample_61.html"
   google_url = "http://google.co.jp"
   ninja_tools_url = "http://ryama.zatunen.com/"
+  urls = [frame_url, iframe_url, google_url, ninja_tools_url]
 
   context "when get_source" do 
     it "can get source" do 
@@ -45,6 +46,51 @@ describe ProcessHTML do
     end
   end
   
-  context "" do
+  context "when get_title_and_sanitize_source" do
+    describe "at get once" do 
+      it "can get title and source(array)" do 
+        urls.each do |url|
+          subject.get_title_and_sanitize_source(url).class.should == Array
+        end
+      end
+    end
+
+    describe "at get twice" do
+      it "can get same sanitized source" do 
+        urls.each do |url|
+          title1,source1 = subject.get_title_and_sanitize_source(url)
+          title2,source2 = subject.get_title_and_sanitize_source(url)
+          title1.should == title2
+          source1.should == source2
+        end
+      end
+    end
   end
+
+  context "when get_sanitize_source" do
+    describe "at get once" do
+      it "should be string" do
+        urls.each do |url|
+          subject.get_sanitize_source(url).class.should == String
+        end
+      end
+
+      it "should be not 0 size" do
+        urls.each do |url|
+          subject.get_sanitize_source(url).size.should_not == 0
+        end
+      end
+    end
+
+    describe "at get once" do
+      it "can get same sanitized source" do
+        urls.each do |url|
+          source1 = subject.get_sanitize_source(url)
+          source2 = subject.get_sanitize_source(url)
+          source1.should == source2
+        end
+      end
+    end
+  end
+
 end

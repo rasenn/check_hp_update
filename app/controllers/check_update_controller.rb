@@ -26,6 +26,13 @@ class CheckUpdateController < ApplicationController
     current_user.update_check(url_id) if current_user
     redirect_to(url)
   end
+
+  def update_all_history
+    current_user.get_lists.each do |list|
+      current_user.update_check(list.id)
+    end
+    redirect_to(:action => :show)
+  end
   
   # 新規URLの入力
   def add_url_for

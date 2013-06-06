@@ -16,6 +16,7 @@ MangaChecker::Application.routes.draw do
   get "check_update/ranking"
   get "check_update/check_update"
   get "check_update/check_maximum_id"
+  get "check_update/update_all_history"
 
   devise_for :users
 
